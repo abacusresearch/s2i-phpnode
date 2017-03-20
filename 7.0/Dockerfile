@@ -11,4 +11,14 @@ RUN INSTALL_PKGS="rh-nodejs4-npm" && \
     yum clean all -y && \
     npm install -g bower grunt gulp-cli phantomjs-prebuilt@2.1.14
 
+# Each language image can have 'contrib' a directory with extra files needed to
+# run and build the applications.
+COPY ./contrib/ /opt/app-root
+
+# In order to drop the root user, we have to make some directories world
+# writeable as OpenShift default security model is to run the container under
+# random UID.
+RUN sed -i -f /opt/app-root/etc/httpdconf.sed /opt/rh/httpd24/root/etc/httpd/conf/httpd.conf && \
+    chmod -R ug+rwx /opt/app-root
+
 USER 1001
