@@ -26,7 +26,7 @@ RUN yum install -y centos-release-scl-rh && \
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
 
-COPY ./php-config/* /etc/opt/rh/rh-php70/php.d/
+COPY ./php-config/* /etc/opt/rh/rh-php71/php.d/
 
 RUN . /opt/rh/rh-nodejs6/enable && npm install -g bower grunt gulp-cli phantomjs-prebuilt@2.1.14
 
