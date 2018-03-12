@@ -10,7 +10,8 @@ USER root
 ENV NODEJS_VERSION=6 \
     NPM_RUN=start \
     NPM_CONFIG_PREFIX=$HOME/.npm-global \
-    PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH
+    PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH \
+    MAX_INPUT_VARS=1000
 
 RUN yum install -y centos-release-scl-rh && \
     yum-config-manager --enable centos-sclo-rh-testing && \
@@ -24,6 +25,8 @@ RUN yum install -y centos-release-scl-rh && \
 # Each language image can have 'contrib' a directory with extra files needed to
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
+
+COPY ./php-config/* /etc/opt/rh/rh-php71/php.d/
 
 RUN . /opt/rh/rh-nodejs6/enable && npm install -g bower grunt gulp-cli phantomjs-prebuilt@2.1.14
 
