@@ -13,13 +13,15 @@ ENV NODEJS_VERSION=6 \
     PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH \
     MAX_INPUT_VARS=1000
 
-RUN yum install -y centos-release-scl-rh && \
+RUN set -x && \
+    yum install -y centos-release-scl-rh && \
     yum-config-manager --enable centos-sclo-rh-testing && \
     INSTALL_PKGS="rh-nodejs6 rh-nodejs6-npm rh-nodejs6-nodejs-nodemon nss_wrapper bsdtar" && \
     ln -s /usr/lib/node_modules/nodemon/bin/nodemon.js /usr/bin/nodemon && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all -y
+    yum clean all -y && \
+    ln -sv "$(which bsdtar)" /usr/local/bin/tar
 
 
 # Each language image can have 'contrib' a directory with extra files needed to
