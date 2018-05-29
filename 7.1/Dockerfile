@@ -24,6 +24,10 @@ RUN set -x && \
     ln -sv "$(which bsdtar)" /usr/local/bin/tar
 
 
+# Overwrite S2I assemble script
+COPY ./s2i/bin/ $STI_SCRIPTS_PATH
+
+
 # Each language image can have 'contrib' a directory with extra files needed to
 # run and build the applications.
 COPY ./contrib/ /opt/app-root
