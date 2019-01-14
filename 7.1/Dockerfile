@@ -11,7 +11,8 @@ ENV NODEJS_VERSION=6 \
     NPM_RUN=start \
     NPM_CONFIG_PREFIX=$HOME/.npm-global \
     PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH \
-    MAX_INPUT_VARS=1000
+    MAX_INPUT_VARS=1000 \
+    PHP_MEMORY_LIMIT=256M
 
 RUN set -x && \
     yum install -y centos-release-scl-rh && \
@@ -36,6 +37,7 @@ RUN . /opt/rh/rh-nodejs6/enable && npm install -g bower grunt gulp-cli phantomjs
 # writeable as OpenShift default security model is to run the container under
 # random UID.
 RUN sed -i -f /opt/app-root/etc/httpdconf.sed /opt/rh/httpd24/root/etc/httpd/conf/httpd.conf && \
+    sed -i -E -f /opt/app-root/etc/phpini.sed /etc/opt/rh/rh-php71/php.ini && \
     chmod -R ug+rwx /opt/app-root
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
