@@ -37,7 +37,6 @@ RUN . /opt/rh/rh-nodejs6/enable && npm install -g bower grunt gulp-cli phantomjs
 # writeable as OpenShift default security model is to run the container under
 # random UID.
 RUN sed -i -f /opt/app-root/etc/httpdconf.sed /opt/rh/httpd24/root/etc/httpd/conf/httpd.conf && \
-    sed -i -E -f /opt/app-root/etc/phpini.sed /etc/opt/rh/rh-php70/php.ini && \
     chmod -R ug+rwx /opt/app-root
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
