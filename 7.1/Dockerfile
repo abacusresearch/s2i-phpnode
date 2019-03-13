@@ -16,13 +16,15 @@ ENV NODEJS_VERSION=6 \
 RUN set -x && \
     yum install -y centos-release-scl-rh && \
     yum-config-manager --enable centos-sclo-rh-testing && \
-    INSTALL_PKGS="rh-nodejs6 rh-nodejs6-npm rh-nodejs6-nodejs-nodemon nss_wrapper bsdtar" && \
+    INSTALL_PKGS="rh-nodejs6 rh-nodejs6-npm rh-nodejs6-nodejs-nodemon rh-php71-php-devel nss_wrapper bsdtar" && \
     ln -s /usr/lib/node_modules/nodemon/bin/nodemon.js /usr/bin/nodemon && \
     yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
     ln -sv "$(which bsdtar)" /usr/local/bin/tar
 
+# Build opencensus module
+RUN pecl install opencensus-0.2.2
 
 # Each language image can have 'contrib' a directory with extra files needed to
 # run and build the applications.
